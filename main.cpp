@@ -12,8 +12,8 @@
 #include <signal.h>
 #include <unistd.h>
 
-#define QUEUE_SIZE 20 /* total number of slots in the queue */
-
+#define QUEUE_SIZE (20) /* total number of slots in the queue */
+#define MAX_SLEEP_TIME (10000000) /* max total microseconds between producers producing*/
 using namespace std;
 
 // Which operation type will be performed
@@ -86,6 +86,7 @@ void *producer(void *seed){
     srand((unsigned int)seed);
     int produced = 0;
     for(int i = 0; i < num_operations; i++){
+        usleep((unsigned)rand()%MAX_SLEEP_TIME);
         pthread_mutex_lock(&queue_mutex);
         operation oper;
         oper.a = rand();
@@ -103,8 +104,6 @@ void *producer(void *seed){
 
         pthread_cond_broadcast(&cond);
         pthread_mutex_unlock(&queue_mutex);
-        // Let's keep this to a reasonable sleep time
-        usleep((unsigned)rand()%10000000);
     }
     printf("Producer died\n");
     pthread_exit(NULL);
@@ -199,7 +198,7 @@ int main(int argc, char *argv[]) {
     printf("Total Operations: %d\n", total_operations);
     printf("Total Operations Produced: %d\n", total_operations_produced);
     printf("Total Operations Consumed: %d\n", total_operations_consumed);
-    printf("These should all be same");
+    printf("These should all be same\n");
     pthread_exit(NULL);
     return 0;
 }
