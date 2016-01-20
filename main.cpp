@@ -2,8 +2,10 @@
 #include <time.h>
 #include <pthread.h>
 #include <math.h>
-#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
+#include <unistd.h>
 
 #define QUEUE_SIZE 20 /* total number of slots */
 
@@ -120,10 +122,9 @@ void sigusr2_handler(int signum){
     printf("Operations in queue: %d\n", operations_in_queue);
 }
 
-signal(SIGUSR1, sigusr1_handler);
-signal(SIGUSR2, sigusr2_handler);
-
 int main(int argc, char *argv[]) {
+    signal(SIGUSR1, sigusr1_handler);
+    signal(SIGUSR2, sigusr2_handler);
     // Going to assume input is always correct number of arguments and hope the user
     // doesn't feel like breaking my program today
     if(argc != 4) {
