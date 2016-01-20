@@ -82,9 +82,9 @@ void *producer(void *seed){
 
         pthread_cond_broadcast(&cond);
         pthread_mutex_unlock(&queue_mutex);
+        // Let's keep this to a reasonable sleep time
+        usleep((unsigned)rand()%30000000);
     }
-    // Let's keep this to a reasonable sleep time
-    usleep((unsigned)rand()%30000);
     printf("Producer died\n");
     pthread_exit(NULL);
     return 0;
