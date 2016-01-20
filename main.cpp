@@ -118,7 +118,7 @@ void sigusr1_handler(int signum){
 }
 
 void sigusr2_handler(int signum){
-    printf("Operations produced: %d\n", total_operations_consumed);
+    printf("Operations consumed: %d\n", total_operations_consumed);
     printf("Operations in queue: %d\n", operations_in_queue);
 }
 
